@@ -1,0 +1,53 @@
+Pseudocode for DFS Search
+DFS_Search(Graph, Node, Target, Visited)
+
+1. Mark Node as Visited
+
+2. If Node == Target
+      Return True
+
+3. For each Neighbor
+
+      If Neighbor is not Visited
+
+            If DFS_Search(Neighbor, Target) == True
+
+                    Return True
+
+4. Return False
+
+Python Program for DFS Search
+def dfs_search(graph, node, target, visited):
+
+    visited.add(node)
+
+    if node == target:
+        return True
+
+    for neighbour in graph[node]:
+        if neighbour not in visited:
+            if dfs_search(graph, neighbour, target, visited):
+                return True
+
+    return False
+
+
+graph = {
+
+    'A':['B','C'],
+    'B':['D','E'],
+    'C':['F'],
+    'D':[],
+    'E': ['G'],
+    'F': [],
+    'G':[]
+}
+
+visited = set()
+
+target = 'F'
+
+if dfs_search(graph, 'A', target, visited):
+    print("Target Found")
+else:
+    print("Target Not Found")

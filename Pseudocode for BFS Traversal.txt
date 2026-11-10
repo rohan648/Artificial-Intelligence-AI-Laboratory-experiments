@@ -1,0 +1,59 @@
+Pseudocode for BFS Traversal
+BFS(Graph, Start)
+
+1. Create an empty Queue Q
+2. Create an empty Set Visited
+
+3. Mark Start as Visited
+4. Enqueue(Start)
+
+5. While Queue is not empty
+      Current = Dequeue()
+
+      Visit(Current)
+
+      For every Neighbor of Current
+            If Neighbor is not Visited
+                  Mark Neighbor as Visited
+                  Enqueue(Neighbor)
+
+6. End
+
+Python Program for BFS Traversal
+from collections import deque
+
+# BFS Traversal Function
+def bfs(graph, start):
+
+    visited = set()
+    queue = deque()
+
+    visited.add(start)
+    queue.append(start)
+
+    print("BFS Traversal:")
+
+    while queue:
+
+        node = queue.popleft()
+        print(node, end=" ")
+
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+
+
+# Graph Representation
+graph = {
+
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['G'],
+    'F': []
+}
+
+# Calling Function
+bfs(graph, 'A')

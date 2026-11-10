@@ -1,0 +1,101 @@
+PSEUDOCODE FOR TRAVELLING SALESMAN PROBLEM
+-----------------------------------------------
+Algorithm TSP(distance, n)
+
+Input:
+    distance[][] → Distance matrix between cities
+    n → Number of cities
+
+Output:
+    Minimum cost tour
+    Minimum distance
+
+1. Set start_city = 0
+2. Create a list of all cities except start_city
+3. Set minimum_cost = infinity
+4. Set best_route = empty
+
+5. For each permutation of the remaining cities:
+       a. Set current_cost = 0
+       b. Set current_city = start_city
+       c. Create route = [start_city]
+
+       d. For each city in the permutation:
+              current_cost =
+                  current_cost + distance[current_city][city]
+              current_city = city
+              Add city to route
+
+       e. Add distance[current_city][start_city]
+          to current_cost
+
+       f. Add start_city to route
+
+       g. If current_cost < minimum_cost:
+              minimum_cost = current_cost
+              best_route = route
+
+6. Display best_route
+7. Display minimum_cost
+
+8. Stop
+
+PYTHON CODE FOR TRAVELLING SALESMAN PROBLEM
+-------------------------------------------------
+from itertools import permutations
+
+def travelling_salesman(distance):
+    n = len(distance)
+
+    # Starting city is city 0
+    start = 0
+
+    # All cities except the starting city
+    cities = list(range(1, n))
+
+    minimum_cost = float('inf')
+    best_route = None
+
+    # Generate all possible routes
+    for perm in permutations(cities):
+
+        current_city = start
+        current_cost = 0
+        route = [start]
+
+        # Visit each city
+        for city in perm:
+            current_cost += distance[current_city][city]
+            current_city = city
+            route.append(city)
+
+        # Return to starting city
+        current_cost += distance[current_city][start]
+        route.append(start)
+
+        # Check whether this is the shortest route
+        if current_cost < minimum_cost:
+            minimum_cost = current_cost
+            best_route = route
+
+    return best_route, minimum_cost
+
+
+# Distance matrix
+distance = [
+    [0, 10, 15, 20],
+    [10, 0, 35, 25],
+    [15, 35, 0, 30],
+    [20, 25, 30, 0]
+]
+
+# Solve TSP
+route, cost = travelling_salesman(distance)
+
+# Display result
+print("Best Route:")
+
+for city in route:
+    print(chr(65 + city), end=" ")
+
+print("\nMinimum Distance:", cost)
